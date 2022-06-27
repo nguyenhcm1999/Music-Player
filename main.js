@@ -101,6 +101,7 @@ const app ={
         Object.defineProperty(this,'currentSong',{
             //get đặc tính là không phải mở ngoặc là hàm
             get : function(){
+                // console.log(this.songs[this.currentIndex])
                 return this.songs[this.currentIndex]
             }
         })
@@ -180,7 +181,13 @@ const app ={
             }
             audio.play()
             // _this.render()
-            _this.scrollToActiveSong()
+            // _this.scrollToActiveSong()
+            setTimeout(function(){
+                $('.song.active').scrollIntoView({
+                    behavior: 'smooth',
+                    block:'end',
+                })
+            }, 100)
         }
         
         // Khi pre song
@@ -192,6 +199,12 @@ const app ={
             }
             audio.play()
             // _this.render()
+            setTimeout(function(){
+                $('.song.active').scrollIntoView({
+                    behavior: 'smooth',
+                    block:'center',
+                })
+            }, 300)
             
         }
 
@@ -220,11 +233,14 @@ const app ={
         }
     },
 
-    scrollToActiveSong: function(){
-        setTimeout(function(){
-            $('.song.active').scrollIntoView()
-        }, 500)
-    },
+    // scrollToActiveSong: function(){
+    //     setTimeout(function(){
+    //         $('.song.active').scrollIntoView({
+    //             behavior: 'smooth',
+    //             block:'center',
+    //         })
+    //     }, 300)
+    // },
 
     loadCurrentSong: function(){
         let playlistSongs =$$('.song')
@@ -238,7 +254,7 @@ const app ={
             playlistSongs[i].classList.remove('active')
         }
         playlistSongs[this.currentIndex].classList.add('active')
-        console.log(playlistSongs[this.currentIndex])
+        // console.log(playlistSongs[this.currentIndex])
         
         // console.log(heading, cdThumb, audio)
         // console.log(this.songs.length) 
