@@ -1,6 +1,8 @@
 const $ = document.querySelector.bind(document)
 const $$ = document.querySelectorAll.bind(document)
 
+const PlAYER_STORAGE_KEY = 'F8_PLAYER'
+
 const heading = $('header h2')
 const cdThumb = $('.cd-thumb')
 const audio = $('#audio')
@@ -12,6 +14,8 @@ const prevBtn = $('.btn-prev')
 const nextBtn = $('.btn-next')
 const randomBtn =$('.btn-random')
 const repeatBtn = $('.btn-repeat')
+const playlist = $('.playlist')
+
 
 
 const app ={
@@ -19,57 +23,60 @@ const app ={
     isRandom : false,
     isRepeat: false,
     currentIndex: 0,
+    
+    config: JSON.parse(localStorage.getItem(PlAYER_STORAGE_KEY)) || {},
     songs: [  
         {
           name: "Vì Mẹ Anh Bắt Chia Tay",
           singer: "Miu Lê x Karik",
           path: "./assets/music/ViMeAnhBatChiaTay-MiuLeKarikChauDangKhoa-7479220.mp3",
-          image: "https://i.ytimg.com/vi/jTLhQf5KJSc/maxresdefault.jpg"
+          image: "./assets/img/Loi-bai-hat-Vi-Me-Anh-Bat-Chia-Tay.jpg"
         },
         {
           name: "Hai mươi hai(22)",
           singer: "Hứa Kim Tuyền, AMEE",
           path: "./assets/music/HaiMuoiHai22-HuaKimTuyenAMEE-7231237.mp3",
-          image:
-            "https://1.bp.blogspot.com/-kX21dGUuTdM/X85ij1SBeEI/AAAAAAAAKK4/feboCtDKkls19cZw3glZWRdJ6J8alCm-gCNcBGAsYHQ/s16000/Tu%2BAana%2BPhir%2BSe%2BRap%2BSong%2BLyrics%2BBy%2BRaftaar.jpg"
+          image:"./assets/img/b6de6c0857b19e1c921f2d379817d491.jpg"
         },
         {
-          name: "Naachne Ka Shaunq",
-          singer: "Raftaar x Brobha V",
+          name: "Cứ Thở Đi",
+          singer: "Đức Phúc x Juky San",
+          path:"./assets/music/CuThoDi-DucPhucJukySan-7205846.mp3",
+          image: "./assets/img/photo-1-16520951252081250658255.jpg"
+        },
+        {
+          name: "Tình Bạn Diệu Kỳ",
+          singer: "Ricky Star x Lăng LD x Amee",
+          path: "./assets/music/TinhBanDieuKyMasewRemix-AMee-6942490.mp3",
+          image:"./assets/img/maxresdefault.jpg"
+        },
+        {
+          name: "Do For Love",
+          singer: "Amee",
+          path: "./assets/music/DoForLove-AMeeBRay-6221980.mp3",
+          image:"./assets/img/b58e0094f0cfac1b54f36a9cf6d8c3f3.500x500x1.jpg"
+        },
+        {
+          name: "Em Bé",
+          singer: "Amee x Karik",
           path:
-            "./assets/music/ViMeAnhBatChiaTay-MiuLeKarikChauDangKhoa-7479220.mp3",
-          image: "https://i.ytimg.com/vi/QvswgfLDuPg/maxresdefault.jpg"
+            "./assets/music/EmBe-AMEEKarik-6719970.mp3",
+          image:
+            "./assets/img/embe.jpg"
         },
         {
-          name: "Mantoiyat",
-          singer: "Raftaar x Nawazuddin Siddiqui",
-          path: "./assets/music/ViMeAnhBatChiaTay-MiuLeKarikChauDangKhoa-7479220.mp3",
+          name: "Ex Hate Me",
+          singer: "Amee x Bray",
+          path: "./assets/music/ExsHateMe-BRayMasewAMee-5878683.mp3",
           image:
-            "https://a10.gaanacdn.com/images/song/39/24225939/crop_480x480_1536749130.jpg"
-        },
-        {
-          name: "Aage Chal",
-          singer: "Raftaar",
-          path: "./assets/music/ViMeAnhBatChiaTay-MiuLeKarikChauDangKhoa-7479220.mp3",
-          image:
-            "https://a10.gaanacdn.com/images/albums/72/3019572/crop_480x480_3019572.jpg"
-        },
-        // {
-        //   name: "Damn",
-        //   singer: "Raftaar x kr$na",
-        //   path:
-        //     "https://mp3.filmisongs.com/go.php?id=Damn%20Song%20Raftaar%20Ft%20KrSNa.mp3",
-        //   image:
-        //     "https://filmisongs.xyz/wp-content/uploads/2020/07/Damn-Song-Raftaar-KrNa.jpg"
-        // },
-        {
-          name: "Feeling You",
-          singer: "Raftaar x Harjas",
-          path: "./assets/music/ViMeAnhBatChiaTay-MiuLeKarikChauDangKhoa-7479220.mp3",
-          image:
-            "https://a10.gaanacdn.com/gn_img/albums/YoEWlabzXB/oEWlj5gYKz/size_xxl_1586752323.webp"
+            "./assets/img/133eba671d414ae36f5aa9f3933094d6.jpg"
         }
       ],
+
+    setConfig: function(key,value){
+        this.config[key] = value;
+        localStorage.setItem(PlAYER_STORAGE_KEY, JSON.stringify(this.config))
+    },
       //${index === this.currentIndex ? 'active' : ''}
     render: function(){
         const htmls = this.songs.map((song,index) =>{
@@ -91,7 +98,7 @@ const app ={
 // htmls return thành 1 mảng có chứa những chuỗi chứa đoạn html tạo thành
 // 1 bài hát, muốn chuyển đổi mảng đó thành 1 chuỗi duy nhất để đưa đoạn
 // html vào thẻ div có class là playlist thì dùng join
-        $('.playlist').innerHTML = htmls.join('')
+        playlist.innerHTML = htmls.join('')
     },
     defineProperties: function(){
 // Phương thức defineProperty cho phép khai báo thuộc tính mới, hoặc thay
@@ -105,6 +112,7 @@ const app ={
                 return this.songs[this.currentIndex]
             }
         })
+        
     },
 
     handleEvents:function(){
@@ -213,6 +221,7 @@ const app ={
             // console.log(_this.isRandom)
             _this.isRandom = !_this.isRandom
             // console.log(_this.isRandom)
+            _this.setConfig('isRandom',_this.isRandom)
             randomBtn.classList.toggle('active', _this.isRandom)
             
         }
@@ -220,6 +229,7 @@ const app ={
         // Xử lý lặp lại một song
         repeatBtn.onclick = function(){
             _this.isRepeat = !_this.isRepeat
+            _this.setConfig('isRepeat',_this.isRepeat)
             repeatBtn.classList.toggle('active', _this.isRepeat)
         }
 
@@ -229,6 +239,28 @@ const app ={
                 audio.play()
             }else{
                 nextBtn.click()
+            }
+        }
+
+        // Lắng nghe hành vi click vào playlist
+        playlist.onclick = function(e){
+            const songNode = e.target.closest('.song:not(.active)')
+            
+        // closet trả về chính nó hoặc là thẻ cha của nó, nếu k tìm thấy trả về null
+            if (songNode|| e.target.closest('.option')) {
+                // Xử lý khi click vào song
+               if(songNode){
+                // console.log(songNode.getAttribute('data-index'))
+                // console.log(songNode.dataset.index)
+                _this.currentIndex = songNode.dataset.index
+                _this.loadCurrentSong()
+                audio.play()
+               }
+
+               // Xử lý khi click vào song option
+               if(e.target.closest('.option')){
+
+            }
             }
         }
     },
@@ -259,7 +291,10 @@ const app ={
         // console.log(heading, cdThumb, audio)
         // console.log(this.songs.length) 
     },
-   
+    loadConfig: function(){
+        this.isRandom = this.config.isRandom
+        this.isRepeat = this.config.isRepeat
+    },
     nextSong: function(){
         this.currentIndex++
         if(this.currentIndex >= this.songs.length){
@@ -287,6 +322,8 @@ const app ={
     },
 
     start: function(){
+        // Gán cấu hình từ config vào ứng dụng
+        this.loadConfig()
         // Định nghĩa các thuộc tính cho object, từ currentIndex lấy ra phần tử 
         // đầu tiên để xử lý
         this.defineProperties()
@@ -297,10 +334,14 @@ const app ={
         // Render playlists
         this.render()    
         
+        
         // Tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
         this.loadCurrentSong()
 
-        
+        // Hiển thị trạng thái ban đầu của button repeat & random
+        randomBtn.classList.toggle('active', this.isRandom)
+        repeatBtn.classList.toggle('active', this.isRepeat)
+
     }
 }
 
