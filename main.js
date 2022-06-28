@@ -17,14 +17,14 @@ const repeatBtn = $('.btn-repeat')
 const playlist = $('.playlist')
 
 
-
 const app ={
     isPlaying : false,
     isRandom : false,
     isRepeat: false,
     currentIndex: 0,
-    
+    // chuyển chuỗi String trong localStorage thành Object
     config: JSON.parse(localStorage.getItem(PlAYER_STORAGE_KEY)) || {},
+    // localStorage.getItem(PlAYER_STORAGE_KEY) cũng chính là JSON.stringify(this.config)
     songs: [  
         {
           name: "Vì Mẹ Anh Bắt Chia Tay",
@@ -74,9 +74,29 @@ const app ={
       ],
 
     setConfig: function(key,value){
+        // thêm thuộc tính cho app.config
         this.config[key] = value;
-        localStorage.setItem(PlAYER_STORAGE_KEY, JSON.stringify(this.config))
+        // this.config['isRandom'] = _this.isRandom
+        
+        for (let prop in this.config){console.log(prop)} //isRandom, isRepeat
+
+        // LocalStorage chỉ cho phép lưu biến với kiểu string, nên muốn lưu Object
+        // hoặc Array thì cần covert sang Json. this.config từ Object thành String
+        // do vậy value của PlAYER_STORAGE_KEY là chuỗi string {isRandom: true, isRepeat: true}
+        localStorage.setItem(PlAYER_STORAGE_KEY, JSON.stringify(this.config)) 
+        // _this.setConfig('isRandom',_this.isRandom)
+        
+        // this.isRandom = this.config.isRandom
+        // if ( typeof(Storage) !== "undefined") {
+
+        //     localStorage.clear();
+           
+        //     alert('Đã xóa thành công');
+           
+        //    }
     },
+
+
       //${index === this.currentIndex ? 'active' : ''}
     render: function(){
         const htmls = this.songs.map((song,index) =>{
@@ -142,11 +162,14 @@ const app ={
 
         // Xử lý khi click play
         playBtn.onclick = function(){
+            // Khi click vào playBtn, isPlaying là false, và nó sẽ chạy 
+            // Khi chạy isPlaying đổi thành true, lặp lại khi click vào playBtn
             if (_this.isPlaying){
             audio.pause()
             }else{
             audio.play()
             }
+            // _this.setConfig('isPlaying',_this.isPlaying)
         }
 
         // Khi song được play
@@ -210,7 +233,7 @@ const app ={
             setTimeout(function(){
                 $('.song.active').scrollIntoView({
                     behavior: 'smooth',
-                    block:'center',
+                    block:'end',
                 })
             }, 300)
             
@@ -276,22 +299,23 @@ const app ={
 
     loadCurrentSong: function(){
         let playlistSongs =$$('.song')
-
         heading.textContent = this.currentSong.name
         cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`
         audio.src = this.currentSong.path
        
-        
         for (let i = 0; i < playlistSongs.length; i++) {
             playlistSongs[i].classList.remove('active')
-        }
+        }       
+
         playlistSongs[this.currentIndex].classList.add('active')
-        // console.log(playlistSongs[this.currentIndex])
         
+        // console.log(playlistSongs)
         // console.log(heading, cdThumb, audio)
         // console.log(this.songs.length) 
     },
+
     loadConfig: function(){
+        
         this.isRandom = this.config.isRandom
         this.isRepeat = this.config.isRepeat
     },
@@ -324,6 +348,7 @@ const app ={
     start: function(){
         // Gán cấu hình từ config vào ứng dụng
         this.loadConfig()
+
         // Định nghĩa các thuộc tính cho object, từ currentIndex lấy ra phần tử 
         // đầu tiên để xử lý
         this.defineProperties()
@@ -333,7 +358,6 @@ const app ={
 
         // Render playlists
         this.render()    
-        
         
         // Tải thông tin bài hát đầu tiên vào UI khi chạy ứng dụng
         this.loadCurrentSong()
