@@ -10,6 +10,7 @@ const cd = $('.cd')
 const playBtn =$('.btn-toggle-play')
 const player = $('.player')
 const progress = $('#progress')
+const volume = $('#volume')
 const prevBtn = $('.btn-prev')
 const nextBtn = $('.btn-next')
 const randomBtn =$('.btn-random')
@@ -191,7 +192,10 @@ const app ={
             if (audio.duration){
                 const progressPercent = Math.floor(audio.currentTime / audio.duration * 100)
                 progress.value  = progressPercent
-                
+
+                var x = progress.value;
+                var color = 'linear-gradient(90deg, rgb(236,31,85)'+ x + '%, rgb(252,120,155)' + x +'%)'
+                progress.style.background = color
             }
         }
 
@@ -199,7 +203,32 @@ const app ={
         progress.oninput = function(e){
             const seekTime =e.target.value * audio.duration / 100
             audio.currentTime = seekTime
+
+            var x = progress.value;
+            var color = 'linear-gradient(90deg, rgb(236,31,85)'+ x + '%, rgb(252,120,155)' + x +'%)'
+            progress.style.background = color
         }
+
+        // Xử lý khi tăng giảm âm lượng
+        volume.addEventListener('input', function(){
+            var x = volume.value;
+            var color = 'linear-gradient(90deg, rgb(236,31,85)'+ x + '%, rgb(252,120,155)' + x +'%)'
+            volume.style.background = color
+            audio.volume = volume.value/ 100
+            console.log(volume.value)
+            
+        })
+
+        // volume.oninput = function(e){
+            
+        //     var x = volume.value;
+        //     var color = 'linear-gradient(90deg, rgb(236,31,85)'+ x + '%, rgb(252,120,155)' + x +'%)'
+        //     volume.style.background = color
+        //     const Volume = (e.target.value * audio.volume / 100)
+        //     console.log(volume.value)
+        //     audio.volume = Volume
+            
+        // }
 
         // Khi next song 
         nextBtn.onclick = function(){

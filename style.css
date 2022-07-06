@@ -1,5 +1,5 @@
 :root {
-    --primary-color: #ec1f55;
+    --primary-color: rgb(236, 31, 85);
     --text-color: #333;
   }
   
@@ -112,21 +112,56 @@
     width: 100%;
     -webkit-appearance: none;
     height: 6px;
-    background: #d3d3d3;
+    background: linear-gradient(90deg, rgb(236,31,85) 0%, rgb(252,120,155) 0%);
     outline: none;
     opacity: 0.7;
     -webkit-transition: 0.2s;
     transition: opacity 0.2s;
   }
   
-  .progress::-webkit-slider-thumb {
+  .progress::-webkit-slider-thumb{
+    display:none;
     -webkit-appearance: none;
     appearance: none;
     width: 12px;
-    height: 6px;
+    height: 12px;
+    border-radius:50%;
     background-color: var(--primary-color);
     cursor: pointer;
+    
   }
+
+  .progress1:hover .progress::-webkit-slider-thumb {
+    display:block;
+  }
+
+  .volumebar {
+    width:100%;
+    height:12px;
+  }
+
+  .volume {
+    -webkit-appearance: none;
+    width:100%;
+    height:6px;
+    background: linear-gradient(90deg, rgb(236,31,85) 100%, rgb(252,120,155) 100%);
+    outline: none;
+    opacity: 0.8;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+    border-radius: 12px;
+  }
+
+  .volume::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 12px;
+    height: 12px;
+    background-color:rgb(236, 31, 85);
+    cursor: pointer;
+    border-radius:50%
+  }
+  
   
   /* PLAYLIST */
   .playlist {
