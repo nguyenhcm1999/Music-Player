@@ -8,7 +8,10 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 <link rel="stylesheet" href="./style.css">
+<link href="./assets/fonts/fontawesome-free-5.15.4/css/all.min.css" rel="stylesheet"/>
+<script src="https://kit.fontawesome.com/c9a1753d21.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <div class="player">
@@ -45,17 +48,40 @@
               <i class="fas fa-random"></i>
             </div>
           </div>
-          <div class="progress1">
+          <div class="progressbar">
             <input id="progress" class="progress" type="range" value="0" step="1" min="0" max="100" >
           </div>
          
           
           <audio id="audio" src=""></audio>
           
-          <div class="volumebar">
-            <input type="range" value="100" step="1" min="0" max="100" class="volume" id="volume" >
+          <div class="editbar">
+            <div class="volumebar">
+              <div class="btn btn-volume">
+                <i class="btn volume-muted fas fa-volume-slash"></i>
+                <i class="btn volume-down fas fa-volume-down"></i>
+                <i class="btn volume-medium fas fa-volume"></i>
+                <i class="btn volume-up fas fa-volume-up"></i>
+              </div>
+              <div class="volume-panel">
+                <div class = "input-div">
+                  <input type="range" value="100" step="1" min="0" max="100" class="volume" id="volume" >
+                </div>
+              </div>
+              <!-- <div class="volume-panel">
+                <div class="input-div">
+                  <div class="volume-input-div">
+  
+                    <div class="volume-progress"></div>
+                  </div>
+                </div>
+              </div> -->
+              <div class="gear">
+                <i class="fa-solid fa-gear"></i>
+              </div>
+            </div>
           </div>
-
+          
           
         </div>
       

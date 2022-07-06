@@ -10,19 +10,30 @@ const cd = $('.cd')
 const playBtn =$('.btn-toggle-play')
 const player = $('.player')
 const progress = $('#progress')
+const volumeBar = $('.volumebar')
+const volumeBtn = $('.btn-volume')
+const volumePanel = $('.volume-panel')
 const volume = $('#volume')
+const volumemuted = $('.volume-muted')
+const volumedown = $('.volume-down')
+const volumemedium = $('.volume-medium')
+const volumeup = $('.volume-up')
 const prevBtn = $('.btn-prev')
 const nextBtn = $('.btn-next')
 const randomBtn =$('.btn-random')
 const repeatBtn = $('.btn-repeat')
 const playlist = $('.playlist')
 
+volumemuted.style.display ='none'
+volumedown.style.display ='none'
+volumemedium.style.display ='none'
 
 const app ={
     isPlaying : false,
     isRandom : false,
     isRepeat: false,
     currentIndex: 0,
+    
     // chuyển chuỗi String trong localStorage thành Object
     config: JSON.parse(localStorage.getItem(PlAYER_STORAGE_KEY)) || {},
     // localStorage.getItem(PlAYER_STORAGE_KEY) cũng chính là JSON.stringify(this.config)
@@ -139,7 +150,7 @@ const app ={
     handleEvents:function(){
         const _this = this
         const cdWidth = cd.offsetWidth
-
+        audio.muted = false
         // Xử lý CD quay / dừng
         const cdThumbAnimate = cdThumb.animate([
             {transform:'rotate(0deg)'},
@@ -209,26 +220,89 @@ const app ={
             progress.style.background = color
         }
 
+        // Xử lý khi chạm vào nút âm lượng
+        volumeBtn.addEventListener('mouseenter',function(){
+            volumePanel.style.margin = '0px 0px 0px 0px';
+            volumePanel.style.width = '100px';
+            volumePanel.style.transition = 'all 0.2s ease'
+        })
+
+        volumeBar.addEventListener('mouseleave',function(){
+            volumePanel.style.margin = '0px 0px 0px 0px';
+            volumePanel.style.width = '0px';
+            volumePanel.style.transition = 'all 0.2s ease'
+        })
+
+        // Xử lý khi click vào nút âm lượng
+        volumeBtn.addEventListener('click', function(){
+            audio.muted = !audio.muted;
+            if(audio.muted) {
+                volumemuted.style.display = ''
+                volumedown.style.display = 'none'
+                volumemedium.style.display = 'none'
+                volumeup.style.display = 'none'
+                volume.value = 0
+                
+                
+            } else {
+                volume.value = audio.volume * 100
+
+                if(audio.volume <= 0.25) {
+                    volumemuted.style.display = 'none'
+                    volumedown.style.display = ''
+                    volumemedium.style.display = 'none'
+                    volumeup.style.display = 'none'
+                } else if(audio.volume <= 0.5) {
+                    volumemuted.style.display = 'none'
+                    volumedown.style.display = 'none'
+                    volumemedium.style.display = ''
+                    volumeup.style.display = 'none'
+                } else if(audio.volume > 0.5) {
+                    volumemuted.style.display = 'none'
+                    volumedown.style.display = 'none'
+                    volumemedium.style.display = 'none'
+                    volumeup.style.display = ''
+                }
+                
+            }
+        })
+        
         // Xử lý khi tăng giảm âm lượng
-        volume.addEventListener('input', function(){
+        volume.addEventListener('input', function(e){
             var x = volume.value;
             var color = 'linear-gradient(90deg, rgb(236,31,85)'+ x + '%, rgb(252,120,155)' + x +'%)'
             volume.style.background = color
             audio.volume = volume.value/ 100
-            console.log(volume.value)
+            console.log(audio.volume)
             
-        })
+            if(volume.value <= 0) {
+                volumemuted.style.display = ''
+                volumedown.style.display = 'none'
+                volumemedium.style.display = 'none'
+                volumeup.style.display = 'none'
+            } else if(volume.value <= 25){
+                volumemuted.style.display = 'none'
+                volumedown.style.display = ''
+                volumemedium.style.display = 'none'
+                volumeup.style.display = 'none'
+            } else if(volume.value <= 50){ 
+                volumemuted.style.display = 'none'
+                volumedown.style.display = 'none'
+                volumemedium.style.display = ''
+                volumeup.style.display = 'none'
+            } else if(volume.value > 50){
+                volumemuted.style.display = 'none'
+                volumedown.style.display = 'none'
+                volumemedium.style.display = 'none'
+                volumeup.style.display = ''
+            } 
+        },false)
 
-        // volume.oninput = function(e){
-            
-        //     var x = volume.value;
-        //     var color = 'linear-gradient(90deg, rgb(236,31,85)'+ x + '%, rgb(252,120,155)' + x +'%)'
-        //     volume.style.background = color
-        //     const Volume = (e.target.value * audio.volume / 100)
-        //     console.log(volume.value)
-        //     audio.volume = Volume
-            
-        // }
+        setInterval(function(){
+            var x = volume.value;
+            var color = 'linear-gradient(90deg, rgb(236,31,85)'+ x + '%, rgb(252,120,155)' + x +'%)'
+            volume.style.background = color
+        })
 
         // Khi next song 
         nextBtn.onclick = function(){
