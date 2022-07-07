@@ -167,6 +167,7 @@
 
     color: var(--primary-color);
     font-size: 18px;
+    min-width: 23px;
     
   }
   .volumebar:hover{
@@ -174,15 +175,15 @@
   } 
 
   .volumebar .volume-panel {
-    display:flex;
+    /* display:flex; */
     position:relative;
     width:0px;
     overflow: hidden;
-    align-items: center;
+    /* align-items: center; */
   }
 
   .volumebar .volume-panel .input-div{
-    position:relative;
+    /* position:relative; */
     top:50%;
     transform: translateY(-10%);
     /* width:100px;
@@ -190,7 +191,7 @@
   }
 
   .volumebar .volume-panel .volume {
-    position:relative;
+    /* position:relative; */
     -webkit-appearance: none;
     width:80px;
     height:6px;
@@ -215,7 +216,7 @@
   
   .gear {
     font-size: 18px;
-    margin: 0 10px;
+    margin: 0 5px;
   }
   /* PLAYLIST */
   .playlist {
