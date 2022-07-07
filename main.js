@@ -11,6 +11,7 @@ const playBtn =$('.btn-toggle-play')
 const player = $('.player')
 const progress = $('#progress')
 const editBar = $('.editbar')
+
 const volumeBar = $('.volumebar')
 const volumeBtn = $('.btn-volume')
 const volumePanel = $('.volume-panel')
@@ -19,6 +20,10 @@ const volumemuted = $('.volume-muted')
 const volumedown = $('.volume-down')
 const volumemedium = $('.volume-medium')
 const volumeup = $('.volume-up')
+
+const currentTime = $('.current-time')
+const audioTime = $('.audio-duration')
+
 const prevBtn = $('.btn-prev')
 const nextBtn = $('.btn-next')
 const randomBtn =$('.btn-random')
@@ -209,6 +214,16 @@ const app ={
                 var color = 'linear-gradient(90deg, rgb(236,31,85)'+ x + '%, rgb(252,120,155)' + x +'%)'
                 progress.style.background = color
             }
+
+            // Cập nhật thời gian hiện tại
+            // console.log(audio.currentTime)
+            var currenthours = Math.floor(audio.currentTime / 3600)
+            var currentminutes = Math.floor(audio.currentTime/ 60 % 60)
+            var currentseconds = Math.floor(audio.currentTime % 60)
+            if ((audio.currentTime >= 600) && ( minutes < 10)){
+                minutes = '0' + minutes
+            }
+            currentTime.textContent = `${currenthours ? currenthours+':' : ''}${currentminutes}:${currentseconds >= 10 ? currentseconds : '0' + currentseconds }`             
         }
 
         // Xử lý khi tua song
@@ -306,8 +321,19 @@ const app ={
             var x = volume.value;
             var color = 'linear-gradient(90deg, rgb(236,31,85)'+ x + '%, rgb(252,120,155)' + x +'%)'
             volume.style.background = color
+
+            if(audio.readyState > 0) {
+                var hours = Math.floor(audio.duration / 3600)
+                var minutes = Math.floor(audio.duration/ 60 % 60)
+                var seconds = Math.floor(audio.duration % 60)
+                if ((audio.duration >= 600) && ( minutes < 10)){
+                    minutes = '0' + minutes
+                }
+                audioTime.textContent = `${hours ? hours+':' : ''}${minutes}:${seconds >= 10 ? seconds : '0' + seconds }`            
+            }
         })
 
+        
         // Khi next song 
         nextBtn.onclick = function(){
             if(_this.isRandom){
@@ -409,7 +435,6 @@ const app ={
         heading.textContent = this.currentSong.name
         cdThumb.style.backgroundImage = `url('${this.currentSong.image}')`
         audio.src = this.currentSong.path
-       
         for (let i = 0; i < playlistSongs.length; i++) {
             playlistSongs[i].classList.remove('active')
         }       
@@ -419,6 +444,17 @@ const app ={
         // console.log(playlistSongs)
         // console.log(heading, cdThumb, audio)
         // console.log(this.songs.length) 
+        // Thời lượng music
+        if(audio.readyState > 0) {
+                var hours = Math.floor(audio.duration / 3600)
+                console.log(hours)
+                var minutes = Math.floor(audio.duration/ 60 % 60)
+                console.log(minutes)
+                var seconds = Math.floor(audio.duration % 60)
+                console.log(seconds)
+                console.log(audioTime.textContent)
+                audioTime.textContent = `${hours}:${minutes}:${seconds}`            
+            }
     },
 
     loadConfig: function(){
