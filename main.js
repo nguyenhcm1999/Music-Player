@@ -10,6 +10,7 @@ const cd = $('.cd')
 const playBtn =$('.btn-toggle-play')
 const player = $('.player')
 const progress = $('#progress')
+const editBar = $('.editbar')
 const volumeBar = $('.volumebar')
 const volumeBtn = $('.btn-volume')
 const volumePanel = $('.volume-panel')
@@ -224,12 +225,16 @@ const app ={
         volumeBtn.addEventListener('mouseenter',function(){
             volumePanel.style.margin = '0px 0px 0px 0px';
             volumePanel.style.width = '100px';
-            volumePanel.style.transition = 'all 0.2s ease'
+            volumeBar.style.width = '115px';
+            volumeBar.style.margin = '0 5px 0 0';
+            volumeBar.style.transition = 'all 0.2s ease'
         })
 
-        volumeBar.addEventListener('mouseleave',function(){
+        editBar.addEventListener('mouseleave',function(){
             volumePanel.style.margin = '0px 0px 0px 0px';
             volumePanel.style.width = '0px';
+            volumeBar.style.width = '0px';
+            volumeBar.style.margin = '0 30px 0 0';
             volumePanel.style.transition = 'all 0.2s ease'
         })
 
@@ -242,7 +247,6 @@ const app ={
                 volumemedium.style.display = 'none'
                 volumeup.style.display = 'none'
                 volume.value = 0
-                
                 
             } else {
                 volume.value = audio.volume * 100
