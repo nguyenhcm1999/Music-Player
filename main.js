@@ -120,9 +120,19 @@ const app ={
         const htmls = this.songs.map((song,index) =>{
             return `
             <div class="song" data-index=${index}>
-                <div class="thumb"
-                    style="background-image: url('${song.image}')">
+                <div class="thumb-div">
+                    <div class="thumb"
+                        style="background-image: url('${song.image}')">
+                    </div>
+                    <div class="caption">
+                        <div class="blur">
+                        </div>
+                    </div>
+                    <div class="btn-play-mini" style="margin-left: 3px; display:">
+                        <i class="fas fa-play"></i>
+                    </div>  
                 </div>
+
                 <div class="body">
                     <h3 class="title">${song.name}</h3>
                     <p class="author">${song.singer}</p>
@@ -240,16 +250,16 @@ const app ={
         volumeBtn.addEventListener('mouseenter',function(){
             volumePanel.style.margin = '0px 0px 0px 0px';
             volumePanel.style.width = '100px';
-            volumeBar.style.width = '115px';
-            volumeBar.style.margin = '0 5px 0 0';
-            volumeBar.style.transition = 'all 0.2s ease'
+            // volumeBar.style.width = '115px';
+            // volumeBar.style.margin = '0 5px 0 0';
+            volumePanel.style.transition = 'all 0.2s ease'
         })
 
         editBar.addEventListener('mouseleave',function(){
             volumePanel.style.margin = '0px 0px 0px 0px';
             volumePanel.style.width = '0px';
-            volumeBar.style.width = '0px';
-            volumeBar.style.margin = '0 30px 0 0';
+            // volumeBar.style.width = '0px';
+            // volumeBar.style.margin = '0 30px 0 0';
             volumePanel.style.transition = 'all 0.2s ease'
         })
 
@@ -257,12 +267,13 @@ const app ={
         volumeBtn.addEventListener('click', function(){
             audio.muted = !audio.muted;
             if(audio.muted) {
+                
                 volumemuted.style.display = ''
                 volumedown.style.display = 'none'
                 volumemedium.style.display = 'none'
                 volumeup.style.display = 'none'
                 volume.value = 0
-                
+                volumeBtn.style.transition = 'all 0.5s ease'
             } else {
                 volume.value = audio.volume * 100
 
@@ -292,7 +303,7 @@ const app ={
             var color = 'linear-gradient(90deg, rgb(236,31,85)'+ x + '%, rgb(252,120,155)' + x +'%)'
             volume.style.background = color
             audio.volume = volume.value/ 100
-            console.log(audio.volume)
+            // console.log(audio.volume)
             
             if(volume.value <= 0) {
                 volumemuted.style.display = ''
