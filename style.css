@@ -88,8 +88,22 @@
   
   .control .btn {
     color: #666;
-    padding: 18px;
+    /* padding: 10px; */
     font-size: 18px;
+  }
+
+  .btn.btn-mini{
+    min-width: 40px;
+    min-height: 40px;
+    /* padding:10px */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .control .btn.btn-mini:hover {
+    background-color: rgb(230, 230, 230);
+    border-radius: 50%;
   }
   
   .control .btn.active {
