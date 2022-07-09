@@ -273,7 +273,6 @@ const app ={
                 volumemedium.style.display = 'none'
                 volumeup.style.display = 'none'
                 volume.value = 0
-                volumeBtn.style.transition = 'all 0.5s ease'
             } else {
                 volume.value = audio.volume * 100
 
