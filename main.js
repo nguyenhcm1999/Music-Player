@@ -267,7 +267,6 @@ const app ={
         volumeBtn.addEventListener('click', function(){
             audio.muted = !audio.muted;
             if(audio.muted) {
-                
                 volumemuted.style.display = ''
                 volumedown.style.display = 'none'
                 volumemedium.style.display = 'none'
