@@ -90,12 +90,12 @@ const app ={
             "./assets/img/133eba671d414ae36f5aa9f3933094d6.jpg"
         }
       ],
-
+    
     setConfig: function(key,value){
         // thêm thuộc tính cho app.config
         this.config[key] = value;
         // this.config['isRandom'] = _this.isRandom
-        
+        // console.log(JSON.stringify(this.config))
         for (let prop in this.config){console.log(prop)} //isRandom, isRepeat
 
         // LocalStorage chỉ cho phép lưu biến với kiểu string, nên muốn lưu Object
@@ -188,7 +188,7 @@ const app ={
             cd.style.opacity = newCDwidth / cdWidth
         }
 
-        // Xử lý khi click play
+        // Xử lý khi click play 
         playBtn.onclick = function(){
             // Khi click vào playBtn, isPlaying là false, và nó sẽ chạy 
             // Khi chạy isPlaying đổi thành true, lặp lại khi click vào playBtn
@@ -467,7 +467,6 @@ const app ={
     },
 
     loadConfig: function(){
-        
         this.isRandom = this.config.isRandom
         this.isRepeat = this.config.isRepeat
     },
